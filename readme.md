@@ -9,3 +9,6 @@ TODO:
 - [ ] Automatic resizing of log entries to fill rows
 - [ ] JS disabled version
 - [ ] Proper README
+
+Takes markdown files as input and outputs:
+![](readme_images/low_quality_resized.jpg)
