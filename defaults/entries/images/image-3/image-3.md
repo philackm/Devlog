@@ -9,7 +9,7 @@
 [kind]: # (image)
 [ui]: # (dark)
 
-![main-image](images/computer.jpg)
+![main-image](images/computer.png)
 #Image 3 Column#
 This is a test for a 3 column image entry.
 
