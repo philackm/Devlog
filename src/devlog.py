@@ -24,13 +24,13 @@ import urllib.error
 # TODO:
 # Paths
 # - Fix build and init paths (simplifying)
-# - Fix .buildhistory saving location (it is currently loading from pwd of python)
+# DONE - Fix .buildhistory saving location (it is currently loading from pwd of python)
 # - Template view directory doesnt know where to go in template.load, hardcoded devlog
 
 # Meta
 # - Videos and video posters
-# - actual link to page on index - DONE
-# - Github Links - DONE
+# DONE - actual link to page on index
+# DONE - Github Links
 
 # Additional Features
 # - 'Pinned Projects' & 'All Projects'
