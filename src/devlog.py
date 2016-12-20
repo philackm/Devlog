@@ -22,21 +22,28 @@ import urllib.error
 # View: Template 
 
 # TODO:
+# Paths
 # - Fix build and init paths (simplifying)
 # - Fix .buildhistory saving location (it is currently loading from pwd of python)
-# - Videos and video posters
-# - actual link to page on index
 # - Template view directory doesnt know where to go in template.load, hardcoded devlog
-# - Should generate classes and tags in the entry, rather than in the template rendering
-# - Github Links
+
+# Meta
+# - Videos and video posters
+# - actual link to page on index - DONE
+# - Github Links - DONE
+
+# Additional Features
+# - 'Pinned Projects' & 'All Projects'
+# - Youtube embeds
+
 
 class BuildHistory():
     def __init__(self, rootPath):
         
         self.history = {}
 
-        buildHistoryFile = os.path.join(rootPath, ".buildHistory")
-        historyLines = FileSystem.readFileIntoLinesArray(buildHistoryFile)
+        self.buildHistoryFile = os.path.join(rootPath, ".buildHistory")
+        historyLines = FileSystem.readFileIntoLinesArray(self.buildHistoryFile)
         regex = "^(.*)\t(.*)$"
         
         for line in historyLines:
@@ -90,7 +97,7 @@ class BuildHistory():
         self.__saveHistoryToFile()
 
     def __saveHistoryToFile(self):
-        FileSystem.writeDictIntoFile(".buildhistory", self.history, "\t")
+        FileSystem.writeDictIntoFile(self.buildHistoryFile, self.history, "\t")
 
 class Devlog():
     def __init__(self):
@@ -115,7 +122,12 @@ class Devlog():
         FileSystem.createDirectory(outputFolderName)
 
         # Create a .buildhistory file to keep track of which entries are "out of date".
-        FileSystem.createFile(newDirectoryName, ".buildhistory") 
+        try:
+            FileSystem.createFile(newDirectoryName, ".buildhistory")
+        except Exception as e:
+            print("Unable to create new devlog directory in directory: {}. A .buildhistory file already exists.".format(newDirectoryName))
+            print("Are you sure you aren't trying to init in a folder that already contains a devlog?")
+            return 
 
         # Copy across default html views/css/javascript
         defaultAssets = self.__getDefaultViews()
@@ -369,10 +381,10 @@ class Template():
         # Data which is processed from meta information in the .md file
         # These are available in the HTML templates using the following keys.
         generatedData = {
-            "classes" : " ".join(self.__generateClasses(model)),
+            "classes" : self.__generateClasses(model),
             "tags" : self.__generateTags(model),
-            "formattedDate" : datetime.strptime(model.meta["date"][0], "%Y-%m-%d").strftime("%B %Y"),
-            "page" : "pages" + "/" + model.fileName + "/" + model.fileName + ".html"
+            "formattedDate" : self.__generateFormattedDate(model),
+            "page" : self.__generateFullPageLink(model)
         }
 
         for key in generatedData:
@@ -414,7 +426,7 @@ class Template():
             else:
                 classes.append("darkui")
 
-        return classes
+        return " ".join(classes)
 
     def __generateTags(self, model): # -> String
 
@@ -427,9 +439,9 @@ class Template():
         return tags
 
     def __generateFormattedDate(self, model):
-        print("todo: __generateFormattedDate")
+        return datetime.strptime(model.meta["date"][0], "%Y-%m-%d").strftime("%B %Y")
     def __generateFullPageLink(self, model):
-        print("todo: __generateFullPageLink")
+        return "pages" + "/" + model.fileName + "/" + model.fileName + ".html"
     def __generateYouTube(self, model):
         print("todo: __generateYouTube")
 
