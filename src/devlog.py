@@ -25,10 +25,11 @@ import urllib.error
 # Paths
 # - Fix build and init paths (simplifying)
 # DONE - Fix .buildhistory saving location (it is currently loading from pwd of python)
-# - Template view directory doesnt know where to go in template.load, hardcoded devlog
+# DONE - Template view directory doesnt know where to go in template.load, hardcoded devlog
 
 # Meta
 # - Videos and video posters
+# - Update entry.meta
 # DONE - actual link to page on index
 # DONE - Github Links
 
@@ -101,31 +102,42 @@ class BuildHistory():
 
 class Devlog():
     def __init__(self):
-        
         print("Starting devlog...")
+
+        self.rootFolderName = "devlog"
+        self.entriesFolderName = "entries"
+        self.viewsFolderName = "views"
+
+        self.outputFolderName = "output"
+        self.outputPagesFolderName = "pages"
+        
+        self.pathToEntries = None
+        self.pathToViews = None
+        self.pathToOutput = None
+
+        self.pathToDevlogRoot = None
 
     def initialise(self, directoryPath, shouldCreateExampleEntries):
         
-        rootFolderName = "devlog"
-        newDirectoryName = os.path.join(directoryPath, rootFolderName)
+        self.pathToDevlogRoot = os.path.join(directoryPath, self.rootFolderName)
         
-        entriesFolderName = os.path.join(newDirectoryName, "entries")
-        viewsFolderName = os.path.join(newDirectoryName, "views")
-        outputFolderName = os.path.join(newDirectoryName, "output")
+        self.pathToEntries = os.path.join(self.pathToDevlogRoot, self.entriesFolderName)
+        self.pathToViews = os.path.join(self.pathToDevlogRoot, self.viewsFolderName)
+        self.pathToOutput = os.path.join(self.pathToDevlogRoot, self.outputFolderName)
 
         # Need to make sure the directory exists.
-        FileSystem.createDirectory(newDirectoryName)
+        FileSystem.createDirectory(self.pathToDevlogRoot)
 
         # have to create the intial directories,  entries, views, output folders
-        FileSystem.createDirectory(entriesFolderName)
-        FileSystem.createDirectory(viewsFolderName)
-        FileSystem.createDirectory(outputFolderName)
+        FileSystem.createDirectory(self.pathToEntries)
+        FileSystem.createDirectory(self.pathToViews)
+        FileSystem.createDirectory(self.pathToOutput)
 
         # Create a .buildhistory file to keep track of which entries are "out of date".
         try:
-            FileSystem.createFile(newDirectoryName, ".buildhistory")
+            FileSystem.createFile(self.pathToDevlogRoot, ".buildhistory")
         except Exception as e:
-            print("Unable to create new devlog directory in directory: {}. A .buildhistory file already exists.".format(newDirectoryName))
+            print("Unable to create new devlog directory in directory: {}. A .buildhistory file already exists.".format(self.pathToDevlogRoot))
             print("Are you sure you aren't trying to init in a folder that already contains a devlog?")
             return 
 
@@ -133,7 +145,7 @@ class Devlog():
         defaultAssets = self.__getDefaultViews()
 
         for path, asset in defaultAssets.items():
-            outputPath = os.path.join(newDirectoryName, path)
+            outputPath = os.path.join(self.pathToDevlogRoot, path)
             FileSystem.writeStringIntoFile(outputPath, asset)
 
         if shouldCreateExampleEntries:                  # TODO
@@ -142,11 +154,11 @@ class Devlog():
             markdown, binaries = self.__getDefaultEntries()
 
             for path, asset in markdown.items():
-                outputPath = os.path.join(newDirectoryName, path)
+                outputPath = os.path.join(self.pathToDevlogRoot, path)
                 FileSystem.writeStringIntoFile(outputPath, asset)
 
             for path, asset in binaries.items():
-                outputPath = os.path.join(newDirectoryName, path)
+                outputPath = os.path.join(self.pathToDevlogRoot, path)
                 FileSystem.writeBytesIntoFile(outputPath, asset)
     
     def build(self, entriesPath, viewsPath, outputPath, isIncrementalBuild):
@@ -172,7 +184,7 @@ class Devlog():
                 # Write out the rendered HTML to its own file
                 self.__writePage(outputPath, viewsPath, entry)
                 # Move all assets
-                pagesDirectory = os.path.join(outputPath, "pages")
+                pagesDirectory = os.path.join(outputPath, self.outputPagesFolderName)
                 FileSystem.copyFiles(entry.assetList, os.path.join(pagesDirectory, entry.fileName))
                 # Update the build history.
                 buildHistory.update(entry)
@@ -187,7 +199,7 @@ class Devlog():
         allEntries = str()
 
         for entry in entries:
-            template = Template.load(entry)
+            template = Template.load(entry, viewsPath)
             allEntries = "{}{}".format(allEntries, template.render(entry))
 
         indexOutputFileName = os.path.join(outputPath, "index.html")
@@ -349,7 +361,7 @@ class Entry():
 
 class Template():
     @staticmethod
-    def load(entry):
+    def load(entry, pathToViews):
 
         kind = str()
 
@@ -360,11 +372,10 @@ class Template():
         else:
             kind = "text"
 
-        templatesDirectory = "views"
         viewFileType = ".html"
         viewFile = "{}{}".format(kind, viewFileType)
 
-        templatePath = os.path.join("devlog", templatesDirectory, viewFile)
+        templatePath = os.path.join(pathToViews, viewFile)
 
         return Template(templatePath)
 
