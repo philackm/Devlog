@@ -23,7 +23,7 @@ import urllib.error
 
 # TODO:
 # Paths
-# - Fix build and init paths (simplifying)
+# DONE - Fix build and init paths (simplifying)
 # DONE - Fix .buildhistory saving location (it is currently loading from pwd of python)
 # DONE - Template view directory doesnt know where to go in template.load, hardcoded devlog
 
@@ -107,8 +107,8 @@ class Devlog():
         self.rootFolderName = "devlog"
         self.entriesFolderName = "entries"
         self.viewsFolderName = "views"
-
         self.outputFolderName = "output"
+
         self.outputPagesFolderName = "pages"
         
         self.pathToEntries = None
@@ -161,9 +161,14 @@ class Devlog():
                 outputPath = os.path.join(self.pathToDevlogRoot, path)
                 FileSystem.writeBytesIntoFile(outputPath, asset)
     
-    def build(self, entriesPath, viewsPath, outputPath, isIncrementalBuild):
+    def build(self, location, isIncrementalBuild):
 
-        buildHistory = BuildHistory(os.path.dirname(entriesPath))
+        rootPath = location
+        entriesPath = os.path.join(rootPath, self.entriesFolderName)
+        viewsPath = os.path.join(rootPath, self.viewsFolderName)
+        outputPath = os.path.join(rootPath, self.outputFolderName)
+
+        buildHistory = BuildHistory(rootPath)
 
         # First get the entire list of entries in the entriesPath
         entries = Entry.entriesInPath(entriesPath, MarkdownEntryParser(), ".md")
@@ -693,13 +698,8 @@ if __name__ == "__main__":
         # Can either "build" a devlog or "init" a new devlog
         argParser.add_argument("command", choices=["build", "init"])
 
-        # 'build' flags
-        argParser.add_argument("-e", "--entries", required=False, default="entries/", 
-            help="the root directory for all the entries")
-        argParser.add_argument("-v", "--views", required=False, default="views/",
-            help="the root directory of all the views")
-        argParser.add_argument("-o", "--output", required=False, default="output/",
-            help="the directory where the HTML will be saved to")
+        argParser.add_argument("-l", "--location", required=False, default=".",
+            help="init: the location to create the new devlog. build: the location of an already existing devlog you wish to build")
 
         argParser.add_argument(
             "-i", 
@@ -707,16 +707,13 @@ if __name__ == "__main__":
             help="only build the entries that have been updated since the last build",
             action="store_true",
             required=False)
-
-        # 'init' flags
-        argParser.add_argument("-l", "--location", required=False, default=".",
-            help="the location to create the starting directory with a few example entries")
+        
         argParser.add_argument(
             "-x", 
             "--examples", 
             required=False,
             action="store_true",
-            help="whether or not to include example entries in the new directory")
+            help="whether or not to include example entries in the new directory when performing an 'init'")
 
         args = argParser.parse_args()
 
@@ -727,9 +724,7 @@ if __name__ == "__main__":
         # Command
         print(args.command)
         # Build
-        print(args.entries)
-        print(args.views)
-        print(args.output)
+        print(args.location)
         print(args.incremental) # bool
         # Init
         print(args.location)
@@ -740,7 +735,7 @@ if __name__ == "__main__":
     devlog = Devlog()
 
     if args.command == "build":
-        devlog.build(args.entries, args.views, args.output, args.incremental)
+        devlog.build(args.location, args.incremental)
     elif args.command == "init":
         devlog.initialise(args.location, args.examples)
     else:
