@@ -34,6 +34,7 @@ import urllib.error
 # Additional Features
 # - 'Pinned Projects' & 'All Projects'
 # - Youtube embeds
+# - When on mobile, "expanding" an entry just links to the HTML page instead of loading it in dynamically.
 
 
 class BuildHistory():
@@ -146,9 +147,7 @@ class Devlog():
             outputPath = os.path.join(self.pathToDevlogRoot, path)
             FileSystem.writeStringIntoFile(outputPath, asset)
 
-        if shouldCreateExampleEntries:                  # TODO
-            # If the --examples flag has been passed, then we want to
-            # include examples of the different types of entries.
+        if shouldCreateExampleEntries:
             markdown, binaries = self.__getDefaultEntries()
 
             for path, asset in markdown.items():
@@ -193,7 +192,6 @@ class Devlog():
                 buildHistory.update(entry)
 
         # Generate the main index page, atm, sorted oldest to newest.
-        # TODO: Update entry.meta
         sortedEntries = sorted(entries, key=lambda entry: datetime.strptime(entry.meta["date"][0], "%Y-%m-%d"), reverse=False)
         self.__writeIndex(outputPath, viewsPath, sortedEntries)
         
@@ -228,10 +226,10 @@ class Devlog():
 
         FileSystem.writeStringIntoFile(pageFileName, renderedPage)
 
-    # TODO: Update all of the defaults below.
-    # -> [String:String], e.g., [path:string], e.g., ["views/text.html" : "<html>...<html>"]
-    def __getDefaultViews(self):
 
+    
+    def __getDefaultViews(self):
+        # -> [String:String], e.g., [path:string], e.g., ["views/text.html" : "<html>...<html>"]
         assets = {}
 
         # List of default resources needed to create the development log.
@@ -496,7 +494,6 @@ class MarkdownEntryParser():
 
             # Grab the path for the entry's main image. '!*(image-path)'
             # TODO: Make this only match the image with the tag "main-image"
-            # TODO: Store into its own main-image metadata property
             match = re.match("^!.*\((.*)\)", line)
             if match:
                 image = match.group(1)
