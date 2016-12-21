@@ -28,8 +28,6 @@ import urllib.error
 # DONE - Template view directory doesnt know where to go in template.load, hardcoded devlog
 
 # Meta
-# - Videos and video posters
-# - Update entry.meta
 # DONE - actual link to page on index
 # DONE - Github Links
 
@@ -329,12 +327,7 @@ class Entry():
         else:
             return None
 
-    def get(self, metaKey):
-        if metaKey in self.meta:
-            return self.meta[metaKey][0]
-        else:
-            return None
-        
+
     # entriesInPath(Path, EntryParser) -> [Entry]
     @staticmethod
     def entriesInPath(rootPath, parser, filetype):
@@ -389,7 +382,7 @@ class Template():
         self.templatePath = templatePath
         self.templateHTML = FileSystem.readFileIntoString(templatePath)
 
-    # TODO: Clean render, generateClasses and generateTags
+
     def render(self, model):
 
         renderedHTML = self.templateHTML
@@ -400,7 +393,8 @@ class Template():
             "classes" : self.__generateClasses(model),
             "tags" : self.__generateTags(model),
             "formattedDate" : self.__generateFormattedDate(model),
-            "page" : self.__generateFullPageLink(model)
+            "page-link" : self.__generateFullPageLink(model),
+            "main-image-link": self.__generareMainImageLink(model)
         }
 
         for key in generatedData:
@@ -410,10 +404,6 @@ class Template():
         # Data which comes directly from the .md file un-edited.
         for key in model.meta:
             value = str(model.meta[key][0])
-
-            if key == "main-image":
-                value = str(os.path.join("pages", model.fileName, value))
-            
             regex = "<= " + key + " =>"
             renderedHTML = re.sub(regex, value, renderedHTML)
 
@@ -458,6 +448,14 @@ class Template():
         return datetime.strptime(model.meta["date"][0], "%Y-%m-%d").strftime("%B %Y")
     def __generateFullPageLink(self, model):
         return "pages" + "/" + model.fileName + "/" + model.fileName + ".html"
+    def __generateMainImageLink(self, model):
+        mainImageLink = str()
+
+        if "main-image" in model.meta:
+            relativeImageLocation = model.meta["main-image"][0]
+            mainImageLink = "pages/{}/{}".format(model.fileName, relativeImageLocation)
+        
+        return mainImageLink
     def __generateYouTube(self, model):
         print("todo: __generateYouTube")
 
