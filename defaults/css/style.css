@@ -311,25 +311,25 @@ main article .links a[href="#"] /* Allows 'hiding' from the .md file. */
 
 main article .links .more
 {
-	font-size: 1em;
-	
 	display: inline-block;
 	position: absolute;
 	right: 1em;
-	
-	background-color: rgba(0, 0, 0, 0.5);
-	border-radius: 1em;
-	width: 3.5em;
-	
-	text-align: center;
-	line-height: 1em;
+
+	text-decoration: none;
 }
 
+main article .links .more i
+{
+	padding-top: 2px;
+}
+
+/*
 main article .links .more:hover
 {
 	cursor: pointer;
 	background-color: #0790FF;
 }
+*/
 
 /* hover details for code and details links */
 /*
@@ -854,16 +854,6 @@ main article.darkui > .links
 {
 	background-color: rgba(255, 255, 255, 0.35);
 	color: white;
-}
-
-main article.darkui > .links .more
-{
-	box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.1);
-}
-
-main article.darkui > .links .more .dot
-{
-	box-shadow: 0px 1px 0px rgba(0, 0, 0, 1);
 }
 
 main article.darkui > .links a

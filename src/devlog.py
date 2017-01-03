@@ -309,7 +309,7 @@ class Devlog():
             "entries/images/image-3-withtext/images/computer.png" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/entries/images/image-3-withtext/images/computer.png",
 
             # Videos
-            "entries/videos/video-2/images/poster.jpg" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/entries/videos/video-2/videos/poster.jpg",
+            "entries/videos/video-2/images/poster.jpg" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/entries/videos/video-2/images/poster.jpg",
 
             # Main Index
             "output/assets/user-unknown-icon.jpg" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/assets/user-unknown-icon.jpg",

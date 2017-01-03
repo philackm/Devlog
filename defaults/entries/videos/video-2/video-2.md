@@ -6,7 +6,7 @@
 [github]: # (#)
 
 [columns]: # (2)
-[ui]: # (dark)
+[ui]: # (light)
 
 [kind]: # (video)
 [youtube]: # (https://www.youtube.com/embed/6ocHnD_LsEI)
