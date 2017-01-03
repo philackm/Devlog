@@ -30,11 +30,15 @@ import urllib.error
 # Meta
 # DONE - actual link to page on index
 # DONE - Github Links
+# Youtube icon link to open youtube directly (?)
 
 # Additional Features
 # - 'Pinned Projects' & 'All Projects'
-# - Youtube embeds
+# DONE - Youtube embeds
 # - When on mobile, "expanding" an entry just links to the HTML page instead of loading it in dynamically.
+
+# Design
+# - Update & fix design
 
 
 class BuildHistory():
@@ -221,8 +225,20 @@ class Devlog():
         pageTemplatePath = os.path.join(viewsPath, "page.html")
         pageTemplate = FileSystem.readFileIntoString(pageTemplatePath)
 
-        regex = "<= entry =>"
-        renderedPage = re.sub(regex, entry.generateHTML(), pageTemplate)
+        entryRegex = "<= entry =>"
+        renderedPage = re.sub(entryRegex, entry.generateHTML(), pageTemplate)
+
+        videoToggle = str()
+        videoRegex = "<= video-toggle =>"
+        
+        if entry.kind == "video-yt":
+            youtubeRegex = "<= youtube =>"
+            youtubeVideoLink = entry.meta["youtube"][0]
+            renderedPage = re.sub(youtubeRegex, youtubeVideoLink, renderedPage)
+        else:
+            videoToggle = "none"
+
+        renderedPage = re.sub(videoRegex, videoToggle, renderedPage)
 
         FileSystem.writeStringIntoFile(pageFileName, renderedPage)
 
@@ -239,6 +255,7 @@ class Devlog():
             "views/text.html" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/views/text.html",
             "views/image.html" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/views/image.html",
             "views/video.html" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/views/video.html",
+            "views/video-yt.html" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/views/video-yt.html",
             "views/page.html" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/views/page.html",
             "views/index.html" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/views/index.html",
 
@@ -277,7 +294,10 @@ class Devlog():
             "entries/images/image-2/image-2.md" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/entries/images/image-2/image-2.md",
             "entries/images/image-2-withtext/image-2-withtext.md" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/entries/images/image-2-withtext/image-2-withtext.md",
             "entries/images/image-3/image-3.md" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/entries/images/image-3/image-3.md",
-            "entries/images/image-3-withtext/image-3-withtext.md" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/entries/images/image-3-withtext/image-3-withtext.md"
+            "entries/images/image-3-withtext/image-3-withtext.md" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/entries/images/image-3-withtext/image-3-withtext.md",
+
+            # Videos
+            "entries/videos/video-2/video-2.md" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/entries/videos/video-2/video-2.md",
         }
 
         binarySource = {
@@ -287,6 +307,9 @@ class Devlog():
             "entries/images/image-2-withtext/images/beach.jpg" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/entries/images/image-2-withtext/images/beach.jpg",
             "entries/images/image-3/images/computer.png" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/entries/images/image-3/images/computer.png",
             "entries/images/image-3-withtext/images/computer.png" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/entries/images/image-3-withtext/images/computer.png",
+
+            # Videos
+            "entries/videos/video-2/images/poster.jpg" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/entries/videos/video-2/videos/poster.jpg",
 
             # Main Index
             "output/assets/user-unknown-icon.jpg" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/assets/user-unknown-icon.jpg",
@@ -316,6 +339,7 @@ class Entry():
         
         self.meta = None
         self.html = None
+        self.kind = None
         
         self.assetList = None
         
@@ -343,6 +367,16 @@ class Entry():
                 # Parse the file and get the metadata and the generated HTML
                 entry.meta = parser.parseMeta(filePath)
 
+                # Determine the "kind" of the entry
+                if "video" in entry.meta["kind"] and "youtube" in entry.meta:
+                    entry.kind = "video-yt"
+                elif "video" in entry.meta["kind"]:
+                    entry.kind = "video"
+                elif "image" in entry.meta["kind"]:
+                    entry.kind = "image"
+                else:
+                    entry.kind = "text"
+
                 # Find any accompanying assets we need to copy for this Entry
                 containingDirectory, _ = os.path.split(filePath)
                 allowedFileTypes = [".jpg", ".png", ".gif", ".mp4", ".webm", ".mov"] # TODO: pull out into settings file
@@ -359,17 +393,8 @@ class Template():
     @staticmethod
     def load(entry, pathToViews):
 
-        kind = str()
-
-        if "video" in entry.meta["kind"]:
-            kind = "video"
-        elif "image" in entry.meta["kind"]:
-            kind = "image"
-        else:
-            kind = "text"
-
         viewFileType = ".html"
-        viewFile = "{}{}".format(kind, viewFileType)
+        viewFile = "{}{}".format(entry.kind, viewFileType)
 
         templatePath = os.path.join(pathToViews, viewFile)
 
@@ -392,7 +417,9 @@ class Template():
             "tags" : self.__generateTags(model),
             "formattedDate" : self.__generateFormattedDate(model),
             "page-link" : self.__generateFullPageLink(model),
-            "main-image-link": self.__generareMainImageLink(model)
+            "main-image-link": self.__generateMainImageLink(model),
+            "youtube-video-id": self.__generateYoutubeVideoID(model),
+            "youtube-video-poster-link": self.__generateYoutubePosterLink(model)
         }
 
         for key in generatedData:
@@ -413,6 +440,7 @@ class Template():
 		
         # Added the classes for the kind of entry
         for kind in model.meta["kind"]:
+
             # The CSS uses the class "withtext" when it is a dual entry type.
             if kind == "text" and len(model.meta["kind"]) >= 2:
                 classes.append("withtext")
@@ -454,8 +482,28 @@ class Template():
             mainImageLink = "pages/{}/{}".format(model.fileName, relativeImageLocation)
         
         return mainImageLink
-    def __generateYouTube(self, model):
-        print("todo: __generateYouTube")
+    def __generateYoutubePosterLink(self, model):
+        posterLink = str()
+
+        if "youtube-poster" in model.meta:
+            relativePosterLocation = model.meta["youtube-poster"][0]
+            posterLink = "pages/{}/{}".format(model.fileName, relativePosterLocation)
+
+        return posterLink
+
+    def __generateYoutubeVideoID(self, model):
+        youtubeVideoID = str()
+        
+        if "youtube" in model.meta:
+            regex = "^.*\?v=(.)*$"
+            fullLink = model.meta["youtube"][0]
+            
+            match = re.match(regex, fullLink)
+            if match:
+                youtubeVideoID = match.group(1)
+
+        return youtubeVideoID
+
 
 class MarkdownEntryParser():
     # parseMeta(entryFilePath) -> {String:String}
