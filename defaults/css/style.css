@@ -8,7 +8,7 @@ body
 	background-color: #F0F0F0;
 	
 	color: #333333;
-	font-family: "Open Sans", sans-serif;
+	font-family: 'Open Sans', sans-serif;
 	font-size: 10px;
 }
 
@@ -31,9 +31,8 @@ a
 
 .container
 {
-	width: 76.8em;
-	/* width: 110em; */
-	/* width: 100%; */
+	width: 76.8em;	/* Three columns */
+	/* width: 102.2em */ /* Four columns */
 	background-color: #EAEAEA;
 	height: auto;
 	
@@ -62,11 +61,10 @@ a
 
 .container header h1, .container header h2
 {
-	font-family: "Montserrat", sans-serif;
+	font-family: 'Arial', 'Helvetica', sans-serif;
 	position: relative;
 	color: #A2A2A2;
 	font-size: 2em;
-	font-weight: 400;
 	letter-spacing: -1px;
 	
 	z-index: 2;
@@ -154,9 +152,9 @@ main article.col-3
 main article h1
 {
 	position: relative;
-	font-family: "PT Mono", monospace;
-	font-size: 1.4em;
-	letter-spacing: -0.8px;
+	font-family: 'Arial', 'Helvetica', sans-serif;
+	font-size: 1.5em;
+	letter-spacing: -0.5px;
 	
 	padding: 0;
 	margin: 0;
@@ -181,6 +179,10 @@ main article .tags
 {
 	position: relative;
 	z-index: 2;
+
+	font-family: 'Arial', 'Helvetica', sans-serif;
+	font-size: 1.2em;
+	line-height: 1.6em;
 }
 
 main article .tags span.tag
@@ -195,7 +197,8 @@ main article .tags span.tag
 	padding-bottom: 0.1em;
 	padding-top: 0.1em;
 	
-	text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.5);
+	text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+	/* text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.5); */
 	
 	background-color: #8D8D8D;
 }
@@ -322,58 +325,6 @@ main article .links .more i
 {
 	padding-top: 2px;
 }
-
-/*
-main article .links .more:hover
-{
-	cursor: pointer;
-	background-color: #0790FF;
-}
-*/
-
-/* hover details for code and details links */
-/*
-main article .links .more:hover:before
-{
-	content: "details";
-	display: inline-block;
-	position: absolute;
-	bottom: 0;
-	top: -3.5em;
-	left: -0.4em;
-	bottom: 3em;
-	
-	border-radius: 0.5em;
-	
-	padding: 0.5em;
-	background-color: black;
-	color: white;
-	font-weight: bold;
-}
-
-main article .links a i:hover:after
-{
-	font-size: 0.8em;
-	content: "code";
-	display: inline-block;
-	position: absolute;
-	bottom: 0;
-	top: -3.5em;
-	left: -0.4em;
-	bottom: 3em;
-	
-	border-radius: 0.5em;
-	
-	padding: 0.5em;
-	line-height: 0.7em;
-	background-color: black;
-	color: white;
-	font-weight: bold;
-	
-	text-shadow: none;
-	font-family: "Open Sans", sans-serif;
-}
-*/
 
 main article .links .more a
 {
@@ -873,16 +824,6 @@ main article.lightui > .links
 	background-color: rgba(0, 0, 0, 0.5);
 }
 
-main article.lightui > .links .more
-{
-	box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.1);
-}
-
-main article.lightui > .links .more .dot
-{
-	box-shadow: 0px 1px 0px rgba(0, 0, 0, 1);
-}
-
 main article.lightui > .links a
 {
 	color: white;
@@ -1047,7 +988,7 @@ div.frame.active
 .frame main
 {
 	display: block;
-	font-size: 13px;
+	font-size: 1.4em;
 	margin-top: 5em;
 }
 
@@ -1089,6 +1030,7 @@ div.frame.active
 
 .frame main h1, .frame main h2, .frame main h3, .frame main h4, .frame main h5
 {
+	font-family: 'Arial', 'Helvetica', sans-serif;
 	margin-left: 15px;
 	margin-right: 15px;
 }
@@ -1098,7 +1040,7 @@ div.frame.active
 	position: absolute;
 	color: #4a4a4a;
 	top: 0em;
-	right: -9em;
+	right: -3.5em;
 	
 	line-height: 2em;
 	vertical-align: middle;
@@ -1110,9 +1052,15 @@ div.frame.active
 	
 	border-radius: 0.2em;
 	
+	font-family: 'Arial', 'Helvetica', sans-serif;
 	font-weight: bold;
 	
 	cursor: pointer;
+}
+
+.frame .container div.close .backmessage
+{
+	display: none;
 }
 
 /* Code syntax styles from Github */
