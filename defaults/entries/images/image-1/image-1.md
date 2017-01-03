@@ -7,7 +7,7 @@
 
 [columns]: # (1)
 [kind]: # (image)
-[ui]: # (dark)
+[ui]: # (light)
 
 ![main-image](images/smartphone.jpg)
 #Image 1 Column#
