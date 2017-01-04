@@ -12,6 +12,9 @@
 [youtube]: # (https://www.youtube.com/embed/6ocHnD_LsEI)
 [youtube-poster]: # (images/poster.jpg)
 
+[pinned]: # (true)
+[pinorder]: # (1)
+
 #Video 2 Column#
 This is a test for a 2 column video entry.
 

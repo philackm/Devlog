@@ -9,6 +9,9 @@
 [kind]: # (image)
 [ui]: # (light)
 
+[pinned]: # (true)
+[pinorder]: # (0)
+
 ![main-image](images/smartphone.jpg)
 #Image 1 Column#
 This is a test for a 1 column image entry.

@@ -33,12 +33,12 @@ import urllib.error
 # Youtube icon link to open youtube directly (?)
 
 # Additional Features
-# - 'Pinned Projects' & 'All Projects'
+# DONE - 'Pinned Projects' & 'All Projects'
 # DONE - Youtube embeds
 # - When on mobile, "expanding" an entry just links to the HTML page instead of loading it in dynamically.
 
 # Design
-# - Update & fix design
+# DONE - Update & fix design
 
 
 class BuildHistory():
@@ -195,13 +195,23 @@ class Devlog():
                 # Update the build history.
                 buildHistory.update(entry)
 
-        # Generate the main index page, atm, sorted oldest to newest.
-        sortedEntries = sorted(entries, key=lambda entry: datetime.strptime(entry.meta["date"][0], "%Y-%m-%d"), reverse=False)
-        self.__writeIndex(outputPath, viewsPath, sortedEntries)
-        
-    def __writeIndex(self, outputPath, viewsPath, entries):
+        # Generate the main index page, atm, sorted newest to oldest.
+        sortedEntries = sorted(entries, key=lambda entry: datetime.strptime(entry.meta["date"][0], "%Y-%m-%d"), reverse=True)
 
+        # Get a list of the pinned entries that we also need to write out.
+        pinnedEntries = filter(lambda entry: "pinned" in entry.meta, sortedEntries)
+        sortedPinnedEntries = sorted(pinnedEntries, key=lambda entry: int(entry.meta["pinorder"][0]), reverse=False)
+
+        self.__writeIndex(outputPath, viewsPath, sortedPinnedEntries, sortedEntries)
+        
+    def __writeIndex(self, outputPath, viewsPath, pinnedEntries, entries):
+
+        pinnedEntriesHTML = str()
         allEntries = str()
+
+        for entry in pinnedEntries:
+            template = Template.load(entry, viewsPath)
+            pinnedEntriesHTML = "{}{}".format(pinnedEntriesHTML, template.render(entry))
 
         for entry in entries:
             template = Template.load(entry, viewsPath)
@@ -212,9 +222,12 @@ class Devlog():
         indexTemplatePath = os.path.join(viewsPath, "index.html")
         indexTemplate = FileSystem.readFileIntoString(indexTemplatePath)
         
-        regex = "<= entries =>"
-        renderedPage = re.sub(regex, allEntries, indexTemplate)
+        regex = "<= pinned =>"
+        renderedPage = re.sub(regex, pinnedEntriesHTML, indexTemplate)
         
+        regex = "<= all =>"
+        renderedPage = re.sub(regex, allEntries, renderedPage)
+
         FileSystem.writeStringIntoFile(indexOutputFileName, renderedPage)
 
 
