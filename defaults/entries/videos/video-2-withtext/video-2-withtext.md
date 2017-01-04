@@ -1,21 +1,22 @@
 [date]: # (2016-12-02)
 [tag]: # (cpp)
 [tag]: # (opengl)
-[title]: # (Video 2 Column)
-[short-text]: # (This is a 2 column video.)
+[title]: # (Video 2 Column With Text)
+[short-text]: # (This is a 2 column video with text.)
 [github]: # (https://github.com)
 
 [columns]: # (2)
 [ui]: # (dark)
 
 [kind]: # (video)
+[kind]: # (text)
 [youtube]: # (https://www.youtube.com/embed/6ocHnD_LsEI)
 [youtube-poster]: # (images/poster.jpg)
 
-#Video 2 Column#
+#Video 2 Column With Text#
 This is a test for a 2 column video entry.
 
-This has come from the **video-2.md** file.
+This has come from the **video-2-withtext.md** file.
 
 Testing for some videos.
 

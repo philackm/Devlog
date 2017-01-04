@@ -3,14 +3,11 @@
 [tag]: # (opengl)
 [title]: # (Image 1 Column)
 [short-text]: # (This is a 1 column image.)
-[github]: # (#)
+[github]: # (https://github.com)
 
 [columns]: # (1)
 [kind]: # (image)
 [ui]: # (light)
-
-[pinned]: # (true)
-[pinorder]: # (0)
 
 ![main-image](images/smartphone.jpg)
 #Image 1 Column#

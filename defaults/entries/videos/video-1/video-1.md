@@ -1,21 +1,21 @@
-[date]: # (2016-12-02)
+[date]: # (2016-12-09)
 [tag]: # (cpp)
 [tag]: # (opengl)
-[title]: # (Video 2 Column)
-[short-text]: # (This is a 2 column video.)
+[title]: # (Video 1 Column)
+[short-text]: # (This is a 1 column video.)
 [github]: # (https://github.com)
 
-[columns]: # (2)
+[columns]: # (1)
 [ui]: # (dark)
 
 [kind]: # (video)
-[youtube]: # (https://www.youtube.com/embed/6ocHnD_LsEI)
+[youtube]: # (https://www.youtube.com/embed/wDEJCyDWMPc)
 [youtube-poster]: # (images/poster.jpg)
 
-#Video 2 Column#
-This is a test for a 2 column video entry.
+#Video 1 Column#
+This is a test for a 1 column video entry.
 
-This has come from the **video-2.md** file.
+This has come from the **video-1.md** file.
 
 Testing for some videos.
 

@@ -2,8 +2,8 @@
 [tag]: # (cpp)
 [tag]: # (opengl)
 [title]: # (Text 1 Column)
-[short-text]: # (This is a 1 column text entry. A preview of the text appears here. This is a 1 column text entry. A preview of the text appears here. This is a 1 column text entry. A preview of the text appears here. This is a 1 column text entry. A preview of the text appears here. This is a 1 column text entry. A preview of the text appears here. This is a 1 column text entry. A preview of the text appears here. This is a 1 column text entry. A preview of the text appears here. This is a 1 column text entry. A preview of the text appears here. This is a 1 column text entry. A preview of the text appears here. This is a 1 column text entry. A preview of the text appears here. This is a 1 column text entry. A preview of the text appears here. This is a 1 column text entry. A preview of the text appears here.)
-[github]: # (#)
+[short-text]: # (This is a 1 column text entry. The text should wrap to one column. This is text that you can write to give poeple viewing the page an idea what this project is about.)
+[github]: # (https://github.com)
 
 [columns]: # (1)
 [kind]: # (text)

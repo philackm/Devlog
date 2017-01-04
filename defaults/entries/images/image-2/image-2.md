@@ -3,7 +3,7 @@
 [tag]: # (opengl)
 [title]: # (Image 2 Column)
 [short-text]: # (This is a 2 column image.)
-[github]: # (#)
+[github]: # (https://github.com)
 
 [columns]: # (2)
 [kind]: # (image)

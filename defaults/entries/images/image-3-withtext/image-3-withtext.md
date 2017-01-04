@@ -1,9 +1,9 @@
 [date]: # (2016-12-06)
 [tag]: # (cpp)
 [tag]: # (opengl)
-[title]: # (Image 3 Column)
+[title]: # (Image 3 Column With Text)
 [short-text]: # (This is a 3 column image. It also has some preview text right next to it.)
-[github]: # (#)
+[github]: # (https://github.com)
 
 [columns]: # (3)
 [kind]: # (text)
@@ -11,7 +11,7 @@
 [ui]: # (dark)
 
 ![main-image](images/computer.png)
-#Image 3 Column#
+#Image 3 Column With Text#
 This is a test for a 3 column image entry.
 
 This has come from the **image-3-withtext.md** file.

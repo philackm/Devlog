@@ -310,7 +310,11 @@ class Devlog():
             "entries/images/image-3-withtext/image-3-withtext.md" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/entries/images/image-3-withtext/image-3-withtext.md",
 
             # Videos
+            "entries/videos/video-1/video-1.md" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/entries/videos/video-1/video-1.md",
             "entries/videos/video-2/video-2.md" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/entries/videos/video-2/video-2.md",
+            "entries/videos/video-2-withtext/video-2-withtext.md" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/entries/videos/video-2-withtext/video-2-withtext.md",
+            "entries/videos/video-3/video-3.md" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/entries/videos/video-3/video-3.md",
+            "entries/videos/video-3-withtext/video-3-withtext.md" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/entries/videos/video-3-withtext/video-3-withtext.md",
         }
 
         binarySource = {
@@ -322,7 +326,11 @@ class Devlog():
             "entries/images/image-3-withtext/images/computer.png" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/entries/images/image-3-withtext/images/computer.png",
 
             # Videos
+            "entries/videos/video-1/images/poster.jpg" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/entries/videos/video-1/images/poster.jpg",
             "entries/videos/video-2/images/poster.jpg" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/entries/videos/video-2/images/poster.jpg",
+            "entries/videos/video-2-withtext/images/poster.jpg" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/entries/videos/video-2-withtext/images/poster.jpg",
+            "entries/videos/video-3/images/poster.jpg" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/entries/videos/video-3/images/poster.jpg",
+            "entries/videos/video-3-withtext/images/poster.jpg" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/entries/videos/video-3-withtext/images/poster.jpg",
 
             # Main Index
             "output/assets/user-unknown-icon.jpg" : "https://raw.githubusercontent.com/philackm/Devlog/master/defaults/assets/user-unknown-icon.jpg",
