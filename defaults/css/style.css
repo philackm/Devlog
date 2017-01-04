@@ -63,7 +63,7 @@ a
 {
 	font-family: 'Arial', 'Helvetica', sans-serif;
 	position: relative;
-	color: #A2A2A2;
+	color: #333333;
 	font-size: 2em;
 	letter-spacing: -1px;
 	
@@ -80,18 +80,59 @@ a
 	display: inline-block;
 	text-align: center;
 	vertical-align: top;
+	width: 100%;
 }
 
 .container .details h1, .container .details h2
 {
 	margin-top: 0.6em;
 	margin-bottom: 0.2em;
-	margin-left: 0.5em;
+	margin-left: 0em;
 }
 
 .container .details h2:last-child
 {
 	margin-top: 0;
+}
+
+.container .details span
+{
+	font-size: 1.4em;
+	color: #cccccc;
+}
+
+.container .details span:hover
+{
+	font-size: 1.4em;
+	color: #0790FF;
+	cursor: pointer;
+}
+
+.container .details p 
+{
+	margin-top: 1.5em;
+	font-family: 'Arial', 'Helvetica', sans-serif;
+	font-weight: bold;
+	color: #555555;
+}
+
+.container .details .links {
+	text-align: center;
+}
+
+.container .details .blue
+{
+	color: blue;
+}
+
+.container .details .orange
+{
+	color: orange;
+}
+
+.container .details .black
+{
+	color: black;
 }
 
 .container header p
@@ -101,6 +142,35 @@ a
 	max-width: 70%;
 	margin: auto;
 }
+
+main .sectionheader
+{
+	display: block;
+	text-align: center;
+}
+
+main .sectionheader h1
+{
+	background-color: white;
+	display: inline-block;
+	margin: auto;
+	border-radius: 0.2em;
+	text-align: center;
+	margin-top: 1em;
+	padding: 0.3em;
+	padding-right: 1em;
+	
+	font-size: 1.5em;
+	font-family: 'Arial', 'Helvetica', sans-serif;
+	letter-spacing: -1px;
+}
+
+main h1 .fa 
+{
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+}
+
 
 
 /* entry */

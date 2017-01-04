@@ -5,22 +5,60 @@
 	    <title>@username - devlog</title>
 	    <!-- <script charset="utf-8" src="js/script.js"></script> -->
 	    <link rel="stylesheet" href="css/style.css">
-	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"> 
 	</head>
 	<body>
 		<div class="container">
 			<header>
-				<img src="assets/user-unknown-icon.jpg">
 				<div class="details">
-					<h1>@username</h1>
-					<h2>development log</h2>
+					<h1>Firstname Surname</h1>
+					<div class="links">
+						<!-- Github Icon -->
+						<a href="#">
+							<span class="fa-stack fa-lg">
+								<i class="fa fa-circle-thin fa-stack-2x"></i>
+								<i class="fa fa-github-alt fa-stack-1x"></i>
+							</span>
+						</a>
+						<!-- Twitter Icon -->
+						<a href="#">
+							<span class="fa-stack fa-lg">
+								<i class="fa fa-circle-thin fa-stack-2x"></i>
+								<i class="fa fa-twitter fa-stack-1x"></i>
+							</span>
+						</a>
+						<!-- Email Icon -->
+						<a href="#">
+							<span class="fa-stack fa-lg">
+								<i class="fa fa-circle-thin fa-stack-2x"></i>
+								<i class="fa fa-at fa-stack-1x"></i>
+							</span>
+						</a>
+					</div>
+					<p>This is where the description goes.</p>
 				</div>
 			</header>
 			
 			<main id="content"> 
 				
+				<div class="sectionheader">
+					<h1>
+						<i class="fa fa-thumb-tack" aria-hidden="true"></i>
+						PINNED PROJECTS
+					</h1>
+				</div>
+				
+				<= entries =>
+
+				<div class="sectionheader">
+					<h1>
+						<i class="fa fa-th-large" aria-hidden="true"></i>
+						ALL PROJECTS
+					</h1>
+				</div>
+
 				<= entries =>
 
 			</main>
