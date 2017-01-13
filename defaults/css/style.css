@@ -200,6 +200,73 @@ main article
 	background-color: #F5F5F5;
 }
 
+main article:not(:hover) {
+	animation: onarticlehoverout 0.4s;
+	-webkit-animation: onarticlehoverout 0.4s;
+	
+	animation-fill-mode: forwards;
+	-webkit-animation-fill-mode: forwards;
+}
+
+main article:hover
+{
+	animation: onarticlehover 0.4s;
+	-webkit-animation: onarticlehover 0.4s;
+	
+	animation-fill-mode: forwards;
+	-webkit-animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes onarticlehover
+{
+	from
+	{
+		-webkit-transform: scale(1.0);
+	}
+	to
+	{
+		-webkit-transform: scale(1.02);
+	}
+}
+
+@keyframes onarticlehover
+{
+	from
+	{
+		transform: scale(1.0);
+	}
+	to
+	{
+		transform: scale(1.02);
+	}
+}
+
+@-webkit-keyframes onarticlehoverout
+{
+	from
+	{
+		-webkit-transform: scale(1.02);
+	}
+	to
+	{
+		-webkit-transform: scale(1.00);
+	}
+}
+
+@keyframes onarticlehoverout
+{
+	from
+	{
+		transform: scale(1.02);
+	}
+	to
+	{
+		transform: scale(1.00);
+	}
+}
+
+
+
 main article.col-1
 {
 	/* width: 30.5000%; */
@@ -1014,7 +1081,7 @@ div.frame.active
 	from
 	{
 		opacity: 0.5;
-		-webkit-transform: translateY(2%);
+		-webkit-transform: translateY(30px);
 	}
 	to
 	{
@@ -1028,7 +1095,7 @@ div.frame.active
 	from
 	{
 		opacity: 0.5;
-		transform: translateY(2%);
+		transform: translateY(30px);
 	}
 	to
 	{
