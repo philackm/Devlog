@@ -105,8 +105,6 @@ class BuildHistory():
 
 class Devlog():
     def __init__(self):
-        print("Starting devlog...")
-
         self.rootFolderName = "devlog"
         self.entriesFolderName = "entries"
         self.viewsFolderName = "views"
@@ -121,13 +119,14 @@ class Devlog():
         self.pathToDevlogRoot = None
 
     def initialise(self, directoryPath, shouldCreateExampleEntries):
-        
+        print("Initialising devlog...")
         self.pathToDevlogRoot = os.path.join(directoryPath, self.rootFolderName)
         
         self.pathToEntries = os.path.join(self.pathToDevlogRoot, self.entriesFolderName)
         self.pathToViews = os.path.join(self.pathToDevlogRoot, self.viewsFolderName)
         self.pathToOutput = os.path.join(self.pathToDevlogRoot, self.outputFolderName)
 
+        print("Creating directories...")
         # Need to make sure the directory exists.
         FileSystem.createDirectory(self.pathToDevlogRoot)
 
@@ -144,6 +143,7 @@ class Devlog():
             print("Are you sure you aren't trying to init in a folder that already contains a devlog?")
             return 
 
+        print("Downloading default assets...")
         # Copy across default html views/css/javascript
         defaultAssets = self.__getDefaultViews()
 
@@ -152,6 +152,7 @@ class Devlog():
             FileSystem.writeStringIntoFile(outputPath, asset)
 
         if shouldCreateExampleEntries:
+            print("Downloading example entries...")
             markdown, binaries = self.__getDefaultEntries()
 
             for path, asset in markdown.items():
@@ -161,9 +162,12 @@ class Devlog():
             for path, asset in binaries.items():
                 outputPath = os.path.join(self.pathToDevlogRoot, path)
                 FileSystem.writeBytesIntoFile(outputPath, asset)
+
+        print("Initialisation complete.")
     
     def build(self, location, isIncrementalBuild):
 
+        print("Starting build...")
         rootPath = location
         entriesPath = os.path.join(rootPath, self.entriesFolderName)
         viewsPath = os.path.join(rootPath, self.viewsFolderName)
@@ -171,6 +175,7 @@ class Devlog():
 
         buildHistory = BuildHistory(rootPath)
 
+        print("Getting list of entries...")
         # First get the entire list of entries in the entriesPath
         entries = Entry.entriesInPath(entriesPath, MarkdownEntryParser(), ".md")
         # Maintain another list, the entries that have been updated since the last
@@ -184,6 +189,7 @@ class Devlog():
         else:
             entriesToBuild = entries
 
+        print("Generating HTML via Github's Markdown API...")
         # Generate the HTML for each entry that requires it.
         if entriesToBuild is not None:
             for entry in entriesToBuild:
@@ -195,6 +201,7 @@ class Devlog():
                 # Update the build history.
                 buildHistory.update(entry)
 
+        print("Generating the main index page...")
         # Generate the main index page, atm, sorted newest to oldest.
         sortedEntries = sorted(entries, key=lambda entry: datetime.strptime(entry.meta["date"][0], "%Y-%m-%d"), reverse=True)
 
@@ -203,6 +210,8 @@ class Devlog():
         sortedPinnedEntries = sorted(pinnedEntries, key=lambda entry: int(entry.meta["pinorder"][0]), reverse=False)
 
         self.__writeIndex(outputPath, viewsPath, sortedPinnedEntries, sortedEntries)
+
+        print("Build complete.")
         
     def __writeIndex(self, outputPath, viewsPath, pinnedEntries, entries):
 
@@ -422,7 +431,6 @@ class Template():
         return Template(templatePath)
 
     def __init__(self, templatePath):
-        #print("Creating Template")
         self.templatePath = templatePath
         self.templateHTML = FileSystem.readFileIntoString(templatePath)
 
@@ -783,19 +791,9 @@ if __name__ == "__main__":
 
         return args
     
-    # Testing
-    def printArgs(args):
-        # Command
-        print(args.command)
-        # Build
-        print(args.location)
-        print(args.incremental) # bool
-        # Init
-        print(args.location)
-        print(args.examples) # bool
+
     
     args = __parseArgs()
-    printArgs(args)
     devlog = Devlog()
 
     if args.command == "build":
