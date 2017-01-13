@@ -196,6 +196,11 @@ div.highlight
 	border-radius: 0;
 }
 
+img[alt="main-image"] 
+{
+	width: 100%;
+}
+
 code
 {
 	background-color: #f8f8f8;

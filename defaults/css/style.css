@@ -1153,6 +1153,11 @@ div.frame.active
 	border-radius: 0;
 }
 
+.frame img[alt="main-image"] 
+{
+	width: 100%;
+}
+
 code
 {
 	background-color: #f8f8f8;
